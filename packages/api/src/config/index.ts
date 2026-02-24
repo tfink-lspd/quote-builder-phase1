@@ -19,6 +19,15 @@ export const config = {
     password: process.env.DATABASE_PASSWORD || 'password'
   },
 
+  // Database URL (use DATABASE_URL or construct from individual values)
+  get databaseUrl(): string {
+    if (this.database.url) {
+      return this.database.url;
+    }
+    const { user, password, host, port, name } = this.database;
+    return `postgresql://${user}:${password}@${host}:${port}/${name}`;
+  },
+
   // JWT
   jwt: {
     secret: process.env.JWT_SECRET || 'your-secret-key-change-in-production',

@@ -12,9 +12,8 @@
     "test:coverage": "jest --coverage",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
-    "migrate": "node dist/database/migrate.js",
-    "migrate:create": "node scripts/create-migration.js",
-    "seed": "node dist/database/seed.js",
+    "migrate": "ts-node src/database/migrate.ts",
+    "db:migrate": "npm run migrate",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
