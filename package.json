@@ -1,0 +1,30 @@
+{
+  "name": "quote-builder-phase1",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Quote Builder Phase 1 - Production-ready quote management system",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=@lightspeed/quote-builder-api",
+    "dev:web": "npm run dev --workspace=@lightspeed/quote-builder-web",
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "test:coverage": "npm run test:coverage --workspaces",
+    "lint": "npm run lint --workspaces",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "db:migrate": "npm run migrate --workspace=@lightspeed/quote-builder-api",
+    "db:seed": "npm run seed --workspace=@lightspeed/quote-builder-api"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
