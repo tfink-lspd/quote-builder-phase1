@@ -5,8 +5,8 @@ import { config } from './config';
 import { logger } from './utils/logger';
 import { errorHandler } from './api/middleware/error.middleware';
 
-// Import routes (will create these next)
-// import quotesRoutes from './api/routes/quotes.routes';
+// Import routes
+import apiRoutes from './api/routes';
 
 export function createApp(): Application {
   const app = express();
@@ -25,7 +25,7 @@ export function createApp(): Application {
   app.use(express.urlencoded({ extended: true }));
 
   // Request logging middleware
-  app.use((req: Request, res: Response, next: NextFunction) => {
+  app.use((req: Request, _res: Response, next: NextFunction) => {
     logger.info(`${req.method} ${req.path}`, {
       query: req.query,
       body: req.method !== 'GET' ? req.body : undefined
@@ -34,7 +34,7 @@ export function createApp(): Application {
   });
 
   // Health check endpoint
-  app.get('/health', (req: Request, res: Response) => {
+  app.get('/health', (_req: Request, res: Response) => {
     res.json({
       status: 'ok',
       timestamp: new Date().toISOString(),
@@ -44,9 +44,7 @@ export function createApp(): Application {
 
   // API routes
   const apiPrefix = config.apiPrefix || '/api/v1';
-
-  // Mount routes (will uncomment as we build them)
-  // app.use(`${apiPrefix}/quotes`, quotesRoutes);
+  app.use(apiPrefix, apiRoutes);
 
   // 404 handler
   app.use((req: Request, res: Response) => {
